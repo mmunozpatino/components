@@ -5,7 +5,6 @@ class HomePageTemp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
         appBar: AppBar(
           title: Text('Home Page Temp'),
@@ -13,17 +12,17 @@ class HomePageTemp extends StatelessWidget {
         body: ListView(children: _createItemsShort()));
   }
 
-  List<Widget> _createItem() {
-    List<Widget> list = List<Widget>();
+  // List<Widget> _createItem() {
+  //   List<Widget> list = List<Widget>();
 
-    for (String opt in options) {
-      final tempWidget = ListTile(title: Text(opt));
+  //   for (String opt in options) {
+  //     final tempWidget = ListTile(title: Text(opt));
 
-      list..add(tempWidget)..add(Divider());
-    }
+  //     list..add(tempWidget)..add(Divider());
+  //   }
 
-    return list;
-  }
+  //   return list;
+  // }
 
   List<Widget> _createItemsShort() {
     return options.map((e) {
