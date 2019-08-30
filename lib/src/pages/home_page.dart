@@ -8,29 +8,20 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _list() {
-    // print("home page");
-    // print(menuProvider.opciones);
-
-    // menuProvider.loadData().then((options) {
-    //   print('Lista');
-    //   print(options);
-    // });
-
-    // return ListView(children: _createListItems());
     return FutureBuilder(
         future: menuProvider.loadData(),
         //optional arg
-        // initialData: [],
+        initialData: [],
         // wiating ondata onfailed se ejecuta
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          print('builder');
-          print(snapshot.data);
+          // print('builder');
+          // print(snapshot.data);
           return ListView(children: _createListItems(snapshot.data));
         });
   }
 
   List<Widget> _createListItems(List<dynamic> data) {
-    final options= [];
+    final List<Widget> options= [];
 
     data.forEach((opt) {
       final widgetTemp = ListTile(
@@ -41,8 +32,8 @@ class HomePage extends StatelessWidget {
 
         }
       );
-      options.add(widgetTemp);
-      //         ..add(Divider());
+      options..add(widgetTemp)
+              ..add(Divider());
     });
 
     return options;
