@@ -1,3 +1,4 @@
+import 'package:components/src/pages/animated_container.dart';
 import 'package:components/src/pages/card_page.dart';
 import 'package:flutter/material.dart';
 
@@ -14,5 +15,6 @@ final _routes = <String, WidgetBuilder>{
   '/': (BuildContext context) => HomePage(),
   'alert': (BuildContext context) => AlertPage(),
   'avatar': (BuildContext context) => AvatarPage(),
+  'animatedContainer': (BuildContext context) => AnimatedContainerPage(),
   'card': (BuildContext context) => CardPage()
 };
