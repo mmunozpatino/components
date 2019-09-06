@@ -1,5 +1,6 @@
 import 'package:components/src/pages/animated_container.dart';
 import 'package:components/src/pages/card_page.dart';
+import 'package:components/src/pages/input_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:components/src/pages/alert_page.dart';
@@ -16,5 +17,6 @@ final _routes = <String, WidgetBuilder>{
   'alert': (BuildContext context) => AlertPage(),
   'avatar': (BuildContext context) => AvatarPage(),
   'animatedContainer': (BuildContext context) => AnimatedContainerPage(),
-  'card': (BuildContext context) => CardPage()
+  'card': (BuildContext context) => CardPage(),
+  'input': (BuildContext context) => InputPage()
 };
