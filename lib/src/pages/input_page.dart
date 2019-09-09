@@ -11,6 +11,8 @@ class _InputPageState extends State<InputPage> {
   String _pass = '';
   String _fecha = '';
   TextEditingController _inputFieldDate = TextEditingController();
+  List<String> _poderes = ['Volar', 'Rayos X', 'Invisible', "Super Fuerza"];
+  String _selectedOption = 'Volar';
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,8 @@ class _InputPageState extends State<InputPage> {
             Divider(),
             _createFecha(context),
             Divider(),
+            _createDropDown(),
+            Divider(),
             _createPerson(),
           ],
         ));
@@ -41,7 +45,7 @@ class _InputPageState extends State<InputPage> {
           hintText: 'Nombre de la persona',
           labelText: 'Nombre',
           helperText: 'Sólo es el nombre',
-          suffixIcon: Icon(Icons.accessibility),
+          suffixIcon: Icon(Icons.pets),
           icon: Icon(Icons.account_circle),
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(15.0))),
@@ -59,7 +63,8 @@ class _InputPageState extends State<InputPage> {
     return ListTile(
       title: Text('El nombre es $_nombre'),
       subtitle: Text('Email: $_email'),
-      );
+      trailing: Text(_selectedOption),
+    );
   }
 
   Widget _createEmail() {
@@ -88,41 +93,34 @@ class _InputPageState extends State<InputPage> {
           hintText: 'Fecha de nacimiento',
           labelText: 'Fecha de nacimiento',
           suffixIcon: Icon(Icons.calendar_today),
-          icon: Icon(Icons.perm_contact_calendar ),
+          icon: Icon(Icons.perm_contact_calendar),
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(15.0))),
-      onTap: (){
-
+      onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
         _selectDate(context);
-
       },
       controller: _inputFieldDate,
     );
-  } 
+  }
 
-  _selectDate(BuildContext context ) async {
-
+  _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2025),
+        locale: Locale('es', 'ES'));
 
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2018),
-      lastDate: DateTime(2025),
-      locale: Locale('es', 'ES')
-
-    );
-
-    if(picked != null){
+    if (picked != null) {
       setState(() {
         _fecha = picked.toString();
         _inputFieldDate.text = _fecha;
       });
     }
-
   }
 
-  Widget _createPass(){
+  Widget _createPass() {
     return TextField(
       // keyboardType: TextInputType.,
       obscureText: true,
@@ -138,6 +136,35 @@ class _InputPageState extends State<InputPage> {
           _pass = value;
         });
       },
+    );
+  }
+
+  List<DropdownMenuItem<String>> getOptionsDropDown() {
+    List<DropdownMenuItem<String>> list = List();
+
+    _poderes.forEach((poder) => {
+          list.add(
+              DropdownMenuItem(child: Text(poder.toString()), value: poder))
+        });
+
+    return list;
+  }
+
+  Widget _createDropDown() {
+    return Row(
+      children: <Widget>[
+        Icon(Icons.select_all),
+        SizedBox(width: 30.0),
+        DropdownButton(
+          value: _selectedOption,
+          items: getOptionsDropDown(),
+          onChanged: (opt) {
+            setState(() {
+              _selectedOption = opt;
+            });
+          },
+        )
+      ],
     );
   }
 }
