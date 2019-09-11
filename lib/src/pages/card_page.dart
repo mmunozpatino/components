@@ -83,7 +83,7 @@ class CardPage extends StatelessWidget {
               placeholder: AssetImage('assets/jar-loading.gif'),
               image: NetworkImage(
                   'https://static.photocdn.pt/images/articles/2017_1/iStock-545347988.jpg'),
-              fadeInDuration: Duration(microseconds: 100),
+              // fadeInDuration: Duration(microseconds: 100),
               height: 300.0,
               fit: BoxFit.cover),
           // Image(

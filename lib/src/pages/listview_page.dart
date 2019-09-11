@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class ListaPage extends StatefulWidget {
@@ -6,11 +8,12 @@ class ListaPage extends StatefulWidget {
 }
 
 class _ListaPageState extends State<ListaPage> {
-
   ScrollController _scroll = ScrollController();
 
   List<int> _numerosList = new List();
   int _lastItem = 0;
+
+  bool _isLoading = false;
 
   //hot reload
   @override
@@ -19,29 +22,40 @@ class _ListaPageState extends State<ListaPage> {
 
     _add10images();
 
-    _scroll.addListener((){
-      if(_scroll.position.pixels == _scroll.position.maxScrollExtent){
-        _add10images();
+    _scroll.addListener(() {
+      if (_scroll.position.pixels == _scroll.position.maxScrollExtent) {
+        // _add10images();
+        _fetchData();
       }
     });
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _scroll.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Listas'),
-      ),
-      body: _createList(),
-    );
+        appBar: AppBar(
+          title: Text('Listas'),
+        ),
+        body: Stack(
+          children: <Widget>[
+            _createList(),
+            _createLoading()
+          ],
+        ));
   }
 
-  Widget _createList(){
+  Widget _createList() {
     return ListView.builder(
       controller: _scroll,
       itemCount: _numerosList.length,
-      itemBuilder: (BuildContext context, int index){
+      itemBuilder: (BuildContext context, int index) {
         final imagen = _numerosList[index];
 
         return FadeInImage(
@@ -52,12 +66,52 @@ class _ListaPageState extends State<ListaPage> {
     );
   }
 
-  Widget _add10images(){
-
+  Widget _add10images() {
     for (var i = 1; i < 10; i++) {
-      _lastItem ++ ;
+      _lastItem++;
       _numerosList.add(_lastItem);
     }
     setState(() {});
+  }
+
+  Future _fetchData() async {
+    _isLoading = true;
+    setState(() {});
+
+    Timer(Duration(seconds: 2), _respHttp);
+  }
+
+  void _respHttp() {
+    _isLoading = false;
+    // setState(() {});
+    _scroll.animateTo(
+      _scroll.position.pixels +100,
+      curve: Curves.fastOutSlowIn,
+      duration: Duration(milliseconds: 250)
+    );
+    _add10images();
+  }
+
+  Widget _createLoading(){
+    if(_isLoading){
+      // return CircularProgressIndicator();
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircularProgressIndicator(),
+            ],
+          ),
+          SizedBox(
+            height: 15.0,
+          )
+        ],
+        );
+    }else{
+      return Container();
+    }
   }
 }

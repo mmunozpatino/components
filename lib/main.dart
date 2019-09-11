@@ -1,6 +1,5 @@
 import 'package:components/src/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_localizations/flutter_cupertino_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:components/src/pages/alert_page.dart';
